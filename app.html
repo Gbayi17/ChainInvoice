@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChainInvoice — On-chain invoices for freelancers</title>
+  <meta name="description" content="ChainInvoice: a clean, modern on-chain invoicing dApp for freelancers and clients." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#" data-route="dashboard">
+        <span class="brand-mark"></span>
+        <span>ChainInvoice</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" data-route="dashboard" class="nav-link">Dashboard</a>
+        <a href="#" data-route="create" class="nav-link">New Invoice</a>
+      </div>
+      <button id="connectBtn" class="btn btn-primary">Connect Wallet</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    
+   <!-- Dashboard -->
+<section id="view-dashboard" class="view">
+  <div class="page-header">
+    <div>
+      <h1>Invoices</h1>
+      <p class="muted">Track every invoice and its on-chain status.</p>
+    </div>
+    <button class="btn btn-primary" data-route="create">+ New Invoice</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card"><span class="stat-label">Total</span><span id="stat-total" class="stat-value">0</span></div>
+    <div class="stat-card"><span class="stat-label">Funded</span><span id="stat-funded" class="stat-value">0</span></div>
+    <div class="stat-card"><span class="stat-label">Completed</span><span id="stat-completed" class="stat-value">0</span></div>
+    <div class="stat-card"><span class="stat-label">Volume (ETH)</span><span id="stat-volume" class="stat-value">0</span></div>
+  </div>
+
+  <div class="search-bar">
+    <input type="number" id="searchId" placeholder="Find invoice by ID e.g. 3" min="1" />
+    <button class="btn btn-primary" onclick="searchInvoice()">Find</button>
+  </div>
+
+  <div id="invoiceGrid" class="grid"></div>
+</section>
+
+    <!-- Create -->
+    <section id="view-create" class="view hidden">
+      <div class="page-header">
+        <div>
+          <h1>Create Invoice</h1>
+          <p class="muted">Issue an invoice on-chain. Funds are escrowed until you confirm delivery.</p>
+        </div>
+      </div>
+
+      <form id="createForm" class="card form-card">
+        <label class="field">
+          <span>Client wallet address</span>
+          <input type="text" name="client" placeholder="0x..." required pattern="^0x[a-fA-F0-9]{40}$" />
+          <small class="hint">Must be a valid Ethereum address</small>
+        </label>
+        <label class="field">
+          <span>Amount (ETH)</span>
+          <input type="number" name="amount" step="0.0001" min="0.0001" placeholder="0.5" required />
+        </label>
+        <label class="field">
+          <span>Work description</span>
+          <textarea name="description" rows="4" placeholder="Landing page redesign, 2 revisions included..." required></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" data-route="dashboard">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Invoice</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Detail -->
+    <section id="view-detail" class="view hidden">
+      <button class="btn btn-ghost back-btn" data-route="dashboard">← Back to dashboard</button>
+      <div id="detailContent"></div>
+    </section>
+  </main>
+
+  
+
+  <script src="app.js"></script>
+</body>
+</html>
